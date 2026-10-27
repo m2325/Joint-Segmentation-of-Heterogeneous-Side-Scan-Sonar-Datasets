@@ -1,0 +1,7 @@
+torch>=1.13
+torchvision>=0.14
+numpy>=1.23
+opencv-python>=4.7
+scipy>=1.9
+Pillow>=9.0
+segmentation_models_pytorch>=0.3

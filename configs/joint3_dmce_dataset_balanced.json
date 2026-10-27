@@ -1,0 +1,155 @@
+{
+  "experiment_type": "joint_dmce",
+  "loss_type": "dmce",
+  "use_sspm": true,
+  "reliability_weighted_loss": false,
+  "held_out_dataset": null,
+  "protocol": {
+    "type": "joint3",
+    "included_datasets": [
+      "ai4",
+      "subpipe",
+      "mcm"
+    ],
+    "excluded_datasets": [],
+    "loader": "strict_v2_split_lists",
+    "split_protocol": "corrected_v2_split",
+    "expected_split_counts": {
+      "ai4": {
+        "train": 121,
+        "val": 20,
+        "test": 120
+      },
+      "subpipe": {
+        "train": 540,
+        "val": 537,
+        "test": 189
+      },
+      "mcm": {
+        "train": 558,
+        "val": 564,
+        "test": 48
+      }
+    }
+  },
+  "backbone": "segformer_b2",
+  "pretrained": false,
+  "freeze_bn": {
+    "freeze_bn": false,
+    "freeze_bn_mode": null
+  },
+  "use_pla": false,
+  "pla_sigma_local": 8.0,
+  "sba_gamma": 5.0,
+  "sba_sigma_water": 50.0,
+  "a8_scheme": "soft_mask",
+  "a8_margin": 2.0,
+  "a8_lambda": 0.1,
+  "a8_alpha": 0.1,
+  "effective_loss_type": "soft_mask_dmce",
+  "ai4_degrade_to_box": false,
+  "box_edge_downweight": null,
+  "box_edge_band": 8,
+  "datasets": [
+    "ai4",
+    "subpipe",
+    "mcm"
+  ],
+  "dataset_valid_classes": {
+    "ai4": [
+      0,
+      1
+    ],
+    "subpipe": [
+      0,
+      2
+    ],
+    "mcm": [
+      0,
+      3
+    ]
+  },
+  "num_classes": 8,
+  "ignore_index": 255,
+  "img_size": 512,
+  "batch_size": 4,
+  "epochs": 100,
+  "lr": 0.0001,
+  "weight_decay": 0.0001,
+  "seed": 1,
+  "patience": 20,
+  "subpipe_chunk_split": {
+    "train": [
+      1,
+      2
+    ],
+    "val": [],
+    "test": [
+      3
+    ],
+    "discard": [
+      0,
+      4
+    ]
+  },
+  "mcm_split_file": "experiments/splits/mcm_year_split_v1.json",
+  "class_weights": [
+    0.10000000149011612,
+    3.0,
+    3.0,
+    3.0,
+    0.10000000149011612,
+    0.10000000149011612,
+    0.10000000149011612,
+    0.10000000149011612
+  ],
+  "sampler": {
+    "type": "dataset_balanced",
+    "sampler_seed": 42,
+    "scan_max_samples": null
+  },
+  "dataset_info": {
+    "ai4": {
+      "train_samples": 121,
+      "val_samples": 20,
+      "eval_samples": 120,
+      "valid_classes": [
+        0,
+        1
+      ],
+      "split_source": "ai4_split_v2.json (strict file lists)"
+    },
+    "subpipe": {
+      "train_samples": 540,
+      "val_samples": 537,
+      "eval_samples": 189,
+      "valid_classes": [
+        0,
+        2
+      ],
+      "split_source": "subpipe_split_v2.json (strict file lists)"
+    },
+    "mcm": {
+      "train_samples": 558,
+      "val_samples": 564,
+      "eval_samples": 48,
+      "valid_classes": [
+        0,
+        3
+      ],
+      "train_years": [
+        2010,
+        2015,
+        2017
+      ],
+      "val_years": [
+        2018
+      ],
+      "test_years": [
+        2021
+      ],
+      "split_source": "mcm_year_split_v2.json (strict file lists)"
+    }
+  },
+  "total_train_samples": 1219
+}

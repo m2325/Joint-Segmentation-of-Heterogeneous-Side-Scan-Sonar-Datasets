@@ -1,0 +1,367 @@
+{
+  "manifest_version": "v2",
+  "split_protocol": "group_level_isolated",
+  "generated_at": "2026-08-05T23:55:50.196000",
+  "purpose": "Train/val/test split protocol with independent group-level validation sets for all datasets, preventing test-set leakage in checkpoint selection. Groups are isolated by survey/mosaic/transect to prevent spatial autocorrelation.",
+  "datasets": [
+    "ai4shipwrecks",
+    "subpipe",
+    "mcm_mine"
+  ],
+  "split_rules": {
+    "ai4shipwrecks": {
+      "group_key": "shipwreck_site",
+      "rule": "val = {Montana, Near_Shore, Isaac_M_Scott} isolated from train; test unchanged (13 disjoint sites)",
+      "legacy_problem": "v1 used random split, same-site frames leaked across train/val"
+    },
+    "subpipe": {
+      "group_key": "chunk",
+      "rule": "train=Chunk1, val=Chunk2, test=Chunk3, discard=Chunk0+4; 4 boundary frames purged",
+      "legacy_problem": "v1 had val=[] causing val=test leakage"
+    },
+    "mcm_mine": {
+      "group_key": "year",
+      "rule": "train=[2010,2015,2017], val=[2018], test=[2021]",
+      "legacy_problem": "v1 already had independent val; v2 formalizes with hashes"
+    }
+  },
+  "constraints_satisfied": {
+    "test_set_unchanged": true,
+    "val_is_independent_group": true,
+    "val_ratio_ge_10pct": true,
+    "no_file_overlap": true,
+    "no_group_overlap": true
+  },
+  "summary": {
+    "ai4shipwrecks": {
+      "train": 121,
+      "val": 20,
+      "test": 120,
+      "val_pct_of_train": 16.5,
+      "group_key": "shipwreck_site"
+    },
+    "subpipe": {
+      "train": 540,
+      "val": 537,
+      "test": 189,
+      "discard": 3652,
+      "val_pct_of_train": 99.4,
+      "group_key": "chunk"
+    },
+    "mcm_mine": {
+      "train": 558,
+      "val": 564,
+      "test": 48,
+      "val_pct_of_train": 101.1,
+      "group_key": "year"
+    }
+  },
+  "audit_results": {
+    "ai4shipwrecks": {
+      "file_overlap": {
+        "dataset": "ai4",
+        "train_val_overlap": [],
+        "train_test_overlap": [],
+        "val_test_overlap": [],
+        "passed": true
+      },
+      "group_overlap": {
+        "dataset": "ai4",
+        "group_type": "site/chunk/year/sector",
+        "train_val_group_overlap": [],
+        "train_test_group_overlap": [],
+        "val_test_group_overlap": [],
+        "passed": true
+      },
+      "file_existence": {
+        "passed": true,
+        "per_split": {
+          "train": {
+            "n_files": 121,
+            "missing_images": 0,
+            "missing_masks": 0,
+            "passed": true
+          },
+          "val": {
+            "n_files": 20,
+            "missing_images": 0,
+            "missing_masks": 0,
+            "passed": true
+          },
+          "test": {
+            "n_files": 120,
+            "missing_images": 0,
+            "missing_masks": 0,
+            "passed": true
+          }
+        }
+      },
+      "category_distribution": {
+        "per_split": {
+          "train": {
+            "n_masks_loaded": 121,
+            "n_files": 121,
+            "n_classes": 2,
+            "class_pixel_fractions": {
+              "0": 0.990888,
+              "1": 0.009112
+            },
+            "total_pixels": 645658560
+          },
+          "val": {
+            "n_masks_loaded": 20,
+            "n_files": 20,
+            "n_classes": 2,
+            "class_pixel_fractions": {
+              "0": 0.973978,
+              "1": 0.026022
+            },
+            "total_pixels": 152549568
+          },
+          "test": {
+            "n_masks_loaded": 120,
+            "n_files": 120,
+            "n_classes": 2,
+            "class_pixel_fractions": {
+              "0": 0.991581,
+              "1": 0.008419
+            },
+            "total_pixels": 605314944
+          }
+        },
+        "errors": []
+      },
+      "hash_verification": {
+        "passed": true,
+        "method": "sorted_newline_joined",
+        "per_split": {
+          "train": {
+            "matches": true,
+            "stored_sha256": "259b365caa8343fdb0e1e012fefd5642e7dcfbb54316c2d0224354fbadf22a96"
+          },
+          "val": {
+            "matches": true,
+            "stored_sha256": "e8ac699a311d988b84e2e936483b379dce2c8597c5ac05acd9f6d7660300dab9"
+          },
+          "test": {
+            "matches": true,
+            "stored_sha256": "7f1327b3863156f4adb5fcdb3ff4b2e533669ff7ac80550606985301fb157699"
+          }
+        }
+      }
+    },
+    "subpipe": {
+      "file_overlap": {
+        "dataset": "subpipe",
+        "train_val_overlap": [],
+        "train_test_overlap": [],
+        "val_test_overlap": [],
+        "passed": true
+      },
+      "group_overlap": {
+        "dataset": "subpipe",
+        "group_type": "site/chunk/year/sector",
+        "train_val_group_overlap": [],
+        "train_test_group_overlap": [],
+        "val_test_group_overlap": [],
+        "passed": true
+      },
+      "file_existence": {
+        "passed": true,
+        "per_split": {
+          "train": {
+            "n_files": 540,
+            "missing_images": 0,
+            "missing_masks": 0,
+            "passed": true
+          },
+          "val": {
+            "n_files": 537,
+            "missing_images": 0,
+            "missing_masks": 0,
+            "passed": true
+          },
+          "test": {
+            "n_files": 189,
+            "missing_images": 0,
+            "missing_masks": 0,
+            "passed": true
+          }
+        }
+      },
+      "category_distribution": {
+        "per_split": {
+          "train": {
+            "n_masks_loaded": 540,
+            "n_files": 540,
+            "n_classes": 2,
+            "class_pixel_fractions": {
+              "0": 0.979944,
+              "1": 0.020056
+            },
+            "total_pixels": 1350000000
+          },
+          "val": {
+            "n_masks_loaded": 537,
+            "n_files": 537,
+            "n_classes": 2,
+            "class_pixel_fractions": {
+              "0": 0.974818,
+              "1": 0.025182
+            },
+            "total_pixels": 1342500000
+          },
+          "test": {
+            "n_masks_loaded": 189,
+            "n_files": 189,
+            "n_classes": 2,
+            "class_pixel_fractions": {
+              "0": 0.996049,
+              "1": 0.003951
+            },
+            "total_pixels": 472500000
+          }
+        },
+        "errors": []
+      },
+      "hash_verification": {
+        "passed": true,
+        "method": "sorted_newline_joined",
+        "per_split": {
+          "train": {
+            "matches": true,
+            "stored_sha256": "1336c85ff694b653f0d51f6ea75bb20cc9956676d4461df9b0118defe6b0e873"
+          },
+          "val": {
+            "matches": true,
+            "stored_sha256": "c7f363a0b43fc8243c5def220481f4eff4900dc70108c1d4dac967a39411603b"
+          },
+          "test": {
+            "matches": true,
+            "stored_sha256": "bce33e03b6816df5b3cceb2d70f46a8c0a43749bcb8897b6d9ded4f7541b441e"
+          }
+        }
+      }
+    },
+    "mcm_mine": {
+      "file_overlap": {
+        "dataset": "mcm",
+        "train_val_overlap": [],
+        "train_test_overlap": [],
+        "val_test_overlap": [],
+        "passed": true
+      },
+      "group_overlap": {
+        "dataset": "mcm",
+        "group_type": "site/chunk/year/sector",
+        "train_val_group_overlap": [],
+        "train_test_group_overlap": [],
+        "val_test_group_overlap": [],
+        "passed": true
+      },
+      "file_existence": {
+        "passed": true,
+        "per_split": {
+          "train": {
+            "n_files": 558,
+            "missing_images": 0,
+            "missing_masks": 0,
+            "passed": true
+          },
+          "val": {
+            "n_files": 564,
+            "missing_images": 0,
+            "missing_masks": 0,
+            "passed": true
+          },
+          "test": {
+            "n_files": 48,
+            "missing_images": 0,
+            "missing_masks": 0,
+            "passed": true
+          }
+        }
+      },
+      "category_distribution": {
+        "per_split": {
+          "train": {
+            "n_masks_loaded": 558,
+            "n_files": 558,
+            "n_classes": 2,
+            "class_pixel_fractions": {
+              "0": 0.998253,
+              "3": 0.001747
+            },
+            "total_pixels": 386362368
+          },
+          "val": {
+            "n_masks_loaded": 564,
+            "n_files": 564,
+            "n_classes": 2,
+            "class_pixel_fractions": {
+              "0": 0.999186,
+              "3": 0.000814
+            },
+            "total_pixels": 320861184
+          },
+          "test": {
+            "n_masks_loaded": 48,
+            "n_files": 48,
+            "n_classes": 2,
+            "class_pixel_fractions": {
+              "0": 0.998541,
+              "3": 0.001459
+            },
+            "total_pixels": 8306688
+          }
+        },
+        "errors": []
+      },
+      "hash_verification": {
+        "passed": true,
+        "method": "sorted_newline_joined",
+        "per_split": {
+          "train": {
+            "matches": true,
+            "stored_sha256": "c244e1580e23ce278bd34cbb42e577f72256a3a48071d660a593a25fd323825b"
+          },
+          "val": {
+            "matches": true,
+            "stored_sha256": "cc166b239173c4b7ee8fbbc42373f350e3915ab76bf85e67bfb6564ffc67d0b2"
+          },
+          "test": {
+            "matches": true,
+            "stored_sha256": "9d8555198f675eaa97b6ff1bc0d613f84a0bb4b65f15acde60a7c60e2f04dd3e"
+          }
+        }
+      }
+    }
+  },
+  "all_audits_passed": true,
+  "hashes": {
+    "ai4shipwrecks": {
+      "train_sha256": "259b365caa8343fdb0e1e012fefd5642e7dcfbb54316c2d0224354fbadf22a96",
+      "val_sha256": "e8ac699a311d988b84e2e936483b379dce2c8597c5ac05acd9f6d7660300dab9",
+      "test_sha256": "7f1327b3863156f4adb5fcdb3ff4b2e533669ff7ac80550606985301fb157699"
+    },
+    "subpipe": {
+      "train_sha256": "1336c85ff694b653f0d51f6ea75bb20cc9956676d4461df9b0118defe6b0e873",
+      "val_sha256": "c7f363a0b43fc8243c5def220481f4eff4900dc70108c1d4dac967a39411603b",
+      "test_sha256": "bce33e03b6816df5b3cceb2d70f46a8c0a43749bcb8897b6d9ded4f7541b441e"
+    },
+    "mcm_mine": {
+      "train_sha256": "c244e1580e23ce278bd34cbb42e577f72256a3a48071d660a593a25fd323825b",
+      "val_sha256": "cc166b239173c4b7ee8fbbc42373f350e3915ab76bf85e67bfb6564ffc67d0b2",
+      "test_sha256": "9d8555198f675eaa97b6ff1bc0d613f84a0bb4b65f15acde60a7c60e2f04dd3e"
+    }
+  },
+  "split_files": {
+    "ai4shipwrecks": "ai4_split_v2.json",
+    "subpipe": "subpipe_split_v2.json",
+    "mcm_mine": "mcm_year_split_v2.json"
+  },
+  "checkpoint_selection_rule": "best validation metric (val_miou or val_fg_iou), prespecified before test evaluation",
+  "audit_report_path": "audit_report_v2.json",
+  "audit_completed_at": "2026-08-06T00:49:06.015865",
+  "full_audit_overall_pass": true
+}
